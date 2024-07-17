@@ -5,7 +5,7 @@ export default class Currency {
   };
 
   set code(newCode) {
-    this._code = code;
+    this._code = newcode;
   }
 
   get code() {
@@ -24,4 +24,3 @@ export default class Currency {
     return `${this._name} (${this._code})`;
   }
 }
-
