@@ -40,7 +40,9 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> dict:
-        """Retourne une page de données avec une pagination résiliente aux suppressions."""
+        """Retourne une page de données avec
+           une pagination résiliente aux suppressions
+        """
         assert index is not None and 0 <= index < len(self.indexed_dataset())
 
         dataset = self.indexed_dataset()
@@ -51,7 +53,6 @@ class Server:
             if current_index in dataset:
                 data.append(dataset[current_index])
             current_index += 1
-        
         next_index = current_index if current_index < len(dataset) else None
 
         return {
