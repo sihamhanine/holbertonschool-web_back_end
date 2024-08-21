@@ -2,7 +2,7 @@
 """ simple pagination """
 
 
-def index_range(page, page_size)-> tuple:
+def index_range(page, page_size) -> tuple:
     """ function named index_range that takes two integer
         arguments page and page_size.
         The function should return a tuple of size two containing a
