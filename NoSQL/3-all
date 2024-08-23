@@ -1,0 +1,8 @@
+// script that lists all documents in the collection school
+var dbName = "my_db";
+var collectionName = "school";
+
+var db = connect("127.0.0.1:27017/" + dbName);
+
+var cursor = db[collectionName].find();
+cursor.forEach(printjson);
