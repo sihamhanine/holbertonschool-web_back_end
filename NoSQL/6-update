@@ -1,5 +1,4 @@
-// Script to add a new attribute "address"
-//to documents with name="Holberton school"
+// Script to add a new attribute "address" to documents with name="Holberton school"
 
 var dbName = "my_db";
 var collectionName = "school";
