@@ -1,0 +1,13 @@
+// Script to list all documents with name="Holberton school" in the collection "school"
+
+var dbName = "my_db"; 
+var collectionName = "school";
+
+// Connect to the database
+var db = connect("127.0.0.1:27017/" + dbName);
+
+// Query for documents where name is "Holberton school"
+var cursor = db[collectionName].find({ name: "Holberton school" });
+
+// Print each document in JSON format
+cursor.forEach(printjson);
