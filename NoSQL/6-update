@@ -1,0 +1,13 @@
+// Script to add a new attribute "address" to documents with name="Holberton school"
+
+var dbName = "my_db";
+var collectionName = "school";
+
+var db = connect("127.0.0.1:27017/" + dbName);
+
+var result = db[collectionName].updateMany(
+  { name: "Holberton school" },
+  { $set: { address: "972 Mission street" } }
+);
+
+printjson(result);
