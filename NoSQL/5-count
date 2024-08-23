@@ -1,0 +1,10 @@
+// Script to display the number of documents in the collection "school"
+
+var dbName = "my_db"; 
+var collectionName = "school";
+
+var db = connect("127.0.0.1:27017/" + dbName);
+
+var count = db[collectionName].countDocuments();
+
+print(count);
