@@ -1,58 +1,36 @@
 const fs = require('fs');
 
 function countStudents(path) {
-  return new Promise((resolve, reject) => {
-    // Lire le fichier de manière asynchrone
+  const promise = (res, rej) => {
     fs.readFile(path, 'utf8', (error, data) => {
-      if (error) {
-        // Si une erreur se produit, rejeter la promesse avec le message d'erreur
-        reject(new Error('Cannot load the database'));
-      } else {
-        // Diviser les données par lignes
-        const lines = data.split('\n');
-        
-        // Retirer les lignes vides
-        const validLines = lines.filter((line) => line.trim() !== '');
-
-        if (validLines.length <= 1) {
-          reject(new Error('Cannot load the database'));
+      if (error) rej(Error('Cannot load the database'));
+      const messages = [];
+      let message;
+      const content = data.toString().split('\n');
+      let students = content.filter((item) => item);
+      students = students.map((item) => item.split(','));
+      const nStudents = students.length ? students.length - 1 : 0;
+      message = `Number of students: ${nStudents}`;
+      console.log(message);
+      messages.push(message);
+      const subjects = {};
+      for (const i in students) {
+        if (i !== 0) {
+          if (!subjects[students[i][3]]) subjects[students[i][3]] = [];
+          subjects[students[i][3]].push(students[i][0]);
         }
-
-        // Afficher le nombre total d'étudiants (sans compter l'en-tête)
-        console.log(`Number of students: ${validLines.length - 1}`);
-
-        // Créer un objet pour stocker les étudiants par champ d'étude
-        const fields = {};
-
-        // Boucler à partir de la deuxième ligne pour ignorer l'en-tête
-        for (let i = 1; i < validLines.length; i++) {
-          const studentInfo = validLines[i].split(',');
-
-          if (studentInfo.length >= 4) {
-            const firstName = studentInfo[0];
-            const field = studentInfo[3];
-
-            // Ajouter les étudiants à leur champ correspondant
-            if (!fields[field]) {
-              fields[field] = [];
-            }
-            fields[field].push(firstName);
-          }
-        }
-
-        // Afficher le nombre d'étudiants par champ et leurs prénoms
-        for (const field in fields) {
-          if (Object.prototype.hasOwnProperty.call(fields, field)) {
-            const list = fields[field].join(', ');
-            console.log(`Number of students in ${field}: ${fields[field].length}. List: ${list}`);
-          }
-        }
-
-        // Résoudre la promesse
-        resolve();
       }
+      delete subjects.subject;
+      for (const key of Object.keys(subjects)) {
+        message = `Number of students in ${key}: ${
+          subjects[key].length
+        }. List: ${subjects[key].join(', ')}`;
+        console.log(message);
+        messages.push(message);
+      }
+      res(messages);
     });
-  });
+  };
+  return new Promise(promise);
 }
-
 module.exports = countStudents;
